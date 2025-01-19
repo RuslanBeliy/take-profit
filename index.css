@@ -8,6 +8,13 @@ li {
   list-style: none;
 }
 
+input {
+  padding: 5px 15px;
+  border-radius: 10px;
+  border: 1px solid #e98181;
+  font-size: 18px;
+}
+
 button {
   cursor: pointer;
   background: transparent;
@@ -101,6 +108,12 @@ body {
 }
 
 .form-bank {
+  input {
+    width: 100%;
+    margin-top: 5px;
+  }
+}
+.form-btc {
   input {
     width: 100%;
     margin-top: 5px;

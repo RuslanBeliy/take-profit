@@ -10,6 +10,7 @@ const result = {
   rr: 0,
   take: 0,
   volume: 0,
+  volumeBtc: 0,
 };
 
 const setResult = () => {
@@ -17,8 +18,15 @@ const setResult = () => {
 
   resultBox.insertAdjacentHTML(
     'afterbegin',
-    `<div class="result-item">R/R: <strong>${result.rr}</strong></div>
-      <div class="result-item">Объем сделки: <strong>${result.volume}</strong></div>
+    `<div class="result-item">R/R: <strong>${
+      Number.isFinite(result.rr) ? result.rr : 0
+    }</strong></div>
+      <div class="result-item">Объем сделки: <strong>${
+        Number.isFinite(result.volume) ? result.volume : 0
+      }</strong></div>
+      <div class="result-item">Объем сделки к BTC: <strong>${
+        Number.isFinite(result.volumeBtc) ? result.volumeBtc : 0
+      }</strong></div>
       <div class="result-item">Средний тейк: <strong>${result.take}</strong></div>`
   );
 };
@@ -34,6 +42,7 @@ const calculate = () => {
   let bank = 0;
   let buyPrice = 0;
   let stopLoss = 0;
+  let btc = 0;
 
   for (const el of dataForm) {
     const key = el[0];
@@ -45,10 +54,12 @@ const calculate = () => {
     if (key.includes('stop')) stopLoss = value;
     if (key.includes('risk')) risk = value;
     if (key.includes('bank')) bank = value;
-
-    result.volume = ((risk / 100) * bank) / (buyPrice - stopLoss);
-    result.rr = ((result.take - buyPrice) / (buyPrice - stopLoss)).toFixed(2);
+    if (key.includes('btc')) btc = value;
   }
+
+  result.volume = ((risk / 100) * bank) / (buyPrice - stopLoss);
+  result.rr = +((result.take - buyPrice) / (buyPrice - stopLoss)).toFixed(2);
+  result.volumeBtc = ((risk / 100) * bank) / btc / (buyPrice - stopLoss);
 
   setResult();
 };
@@ -62,10 +73,12 @@ const addTake = () => {
             <div class="form-take-inputs">
               <label>
                 Процент
-                <input type="number" name="take-percent-${takes.children.length + 1}" step="any" />
+                <input type="number" name="take-percent-${
+                  takes.children.length + 1
+                }" step="any" value="100" />
               </label>
               <label>
-                Цена
+                Цена продажи
                 <input type="number" name="take-price-${takes.children.length + 1}" step="any" />
               </label>
             </div>`
@@ -78,6 +91,7 @@ const reset = () => {
 
   form.querySelector('[name="buy-price"]').value = '';
   form.querySelector('[name="stop-loss"]').value = '';
+  form.querySelector('[name="btc"]').value = '';
 
   addTake();
 };
