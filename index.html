@@ -8,30 +8,60 @@
   </head>
   <body>
     <div class="wrap">
-      <h1>Расчет тейк профита</h1>
+      <h1>Расчёт сделки</h1>
 
-      <ul id="list">
-        <li>
-          <h2>1 тейк</h2>
+      <form class="form">
+        <div class="form-takes">
+          <div class="form-take">
+            <h2>1 тейк</h2>
 
-          <div class="inputs">
-            <label>
-              Процент
-              <input type="number" />
-            </label>
-            <label>
-              Цена
-              <input type="number" />
-            </label>
+            <div class="form-take-inputs">
+              <label>
+                Процент
+                <input type="number" name="take-percent-1" step="any" />
+              </label>
+              <label>
+                Цена
+                <input type="number" name="take-price-1" step="any" />
+              </label>
+            </div>
           </div>
-        </li>
-      </ul>
+        </div>
 
-      <div class="btns">
-        <button class="calculate">Расчитать</button>
-        <button class="add">Добавить тейк</button>
-        <button class="reset">Сбросить</button>
-      </div>
+        <div class="form-buy-stop">
+          <label>
+            Цена покупки
+            <input type="number" name="buy-price" step="any" />
+          </label>
+
+          <label>
+            Stop loss
+            <input type="number" name="stop-loss" step="any" />
+          </label>
+        </div>
+
+        <div class="form-risk">
+          <label>
+            Риск на сделку
+            <input type="number" value="1" name="risk" step="any" />
+          </label>
+        </div>
+
+        <div class="form-bank">
+          <label>
+            Размер счёта
+            <input class="bank-input" type="number" name="bank" step="any" />
+          </label>
+        </div>
+
+        <div class="form-btns">
+          <button class="calculate" type="submit">Расчитать</button>
+          <button class="add" type="button">Добавить тейк</button>
+          <button class="reset" type="button">Сбросить</button>
+        </div>
+      </form>
+
+      <div class="result"></div>
     </div>
   </body>
   <script src="./index.js"></script>
